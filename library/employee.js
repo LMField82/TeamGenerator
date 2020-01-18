@@ -19,7 +19,6 @@ class Employee {
     }
 
     getName() {
-        if()
         console.log(`Employee Name: ${this.name}`);       
     }
 
@@ -32,17 +31,42 @@ class Employee {
     }
 
     getRole() {
-        if (this.title === Manager) {
+        if (this.title === "Manager") {
             console.log("Employee Title: Manager");
         }
-        if (this.title === Engineer) {
+        if (this.title === "Engineer") {
             console.log("Employee Title: Engineer");
         }
-        if (this.title === Intern) {
+        if (this.title === "Intern") {
             console.log("Employee Title: Intern");
         } else {
-            return ("Employee")
+            return ("Employee Title: Employee");
         }
     }
 }
+
+inquirer.prompt([
+    {
+        message: "What is your name?",
+        type: "input",
+        name: "name"
+    },
+    {
+        message: "What is your ID?",
+        type: "input",
+        name: "id"
+    },
+    {
+        message: "What is your email?",
+        type: "input",
+        name: "email"
+    },
+    {
+        message: "What is your title?",
+        type: "list",
+        name: "title",
+        choices: ["Manager", "Engineer", "Intern"]
+    }
+])
+
 module.exports = Employee;
