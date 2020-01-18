@@ -1,3 +1,9 @@
+const fs = require("fs");
+const inquirer = require("inquirer");
+const jest = require("jest");
+
+
+
 class Employee {
     constructor(name, id, title, email) {
         if(!name) {
@@ -67,6 +73,19 @@ inquirer.prompt([
         name: "title",
         choices: ["Manager", "Engineer", "Intern"]
     }
-])
+]).then(({name, id, email, title}) => {
+    console.log("-----------------------");
+    console.log("name", name);
+    console.log("id", id);
+    console.log("email", email);
+    console.log("title", title);
+    console.log("-----------------------");  
+    getName();
+    getId();
+    getEmail();
+    getRole();
+
+
+})
 
 module.exports = Employee;
