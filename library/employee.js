@@ -1,6 +1,6 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
-const jest = require("jest");
+
 
 
 
@@ -25,67 +25,31 @@ class Employee {
     }
 
     getName() {
-        console.log(`Employee Name: ${this.name}`);       
+        return console.log(`Employee Name: ${this.name}`);       
     }
 
     getId() {
-        console.log(`Employee ID: ${this.id}`);
+        return console.log(`Employee ID: ${this.id}`);
     }
 
     getEmail() {
-        console.log(`Employee Email: ${this.email}`);
+        return console.log(`Employee Email: ${this.email}`);
     }
 
     getRole() {
         if (this.title === "Manager") {
-            console.log("Employee Title: Manager");
+            return console.log("Employee Title: Manager");
         }
         if (this.title === "Engineer") {
-            console.log("Employee Title: Engineer");
+           return console.log("Employee Title: Engineer");
         }
         if (this.title === "Intern") {
-            console.log("Employee Title: Intern");
+           return console.log("Employee Title: Intern");
         } else {
             return ("Employee Title: Employee");
         }
     }
 }
 
-inquirer.prompt([
-    {
-        message: "What is your name?",
-        type: "input",
-        name: "name"
-    },
-    {
-        message: "What is your ID?",
-        type: "input",
-        name: "id"
-    },
-    {
-        message: "What is your email?",
-        type: "input",
-        name: "email"
-    },
-    {
-        message: "What is your title?",
-        type: "list",
-        name: "title",
-        choices: ["Manager", "Engineer", "Intern"]
-    }
-]).then(({name, id, email, title}) => {
-    console.log("-----------------------");
-    console.log("name", name);
-    console.log("id", id);
-    console.log("email", email);
-    console.log("title", title);
-    console.log("-----------------------");  
-    getName();
-    getId();
-    getEmail();
-    getRole();
-
-
-})
 
 module.exports = Employee;
