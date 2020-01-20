@@ -9,7 +9,7 @@ class Employee {
         if(!name) {
             throw new Error("You are missing the name.");
         }
-        if(!id || isNaN) {
+        if(!id || id === isNaN) {
             throw new Error("You must enter a whole number id.");
         }
         if(!title) {

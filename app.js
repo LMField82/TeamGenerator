@@ -1,45 +1,104 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
-const htmlRender = require("./library/htmlRender")
+const htmlRender = require("./library/htmlRender");
+const Manager = require("./library/manager");
+const Engineer = require("./library/engineer");
+const Intern = require("./library/intern");
+const path = require("path");
 
+const outputPath = path.resolve(__dirname, "output", "team.html");
 
+const IDArray = [];
+const teamMembers = [];
 
+buildTeamMenu = () => {
 
-const Manager = () => {
+createTeam = () => {
     inquirer.prompt({
-        message: "What is your office number?",
-        type: "input",
-        name: "officeNumber"
-    }).then(({officeNumber}) => {
-        const officeNum = this.officeNumber;
-        
+        message: "What type of team member would you like to add?",
+        type: "list",
+        choices: ["Engineer", "Intern", "No More Team Members"],
+        name: "addTeamMembers"
+
+    }).then(userChoice => {
+        switch (userChoice.addTeamMembers) {
+            case "Engineer":
+                addEngineer();
+                break;
+            case "Intern":
+                addIntern();
+                break;
+            default:
+                buildTeam();
+        }
     });
 }
 
-const Engineer = () => {
-    inquirer.prompt({
-        message: "What is your GitHub user name?",
-        type: "input",
-        name: "githubUserName"
-    }).then(({githubUserName}) => {
-        const githubUser = this.githubUserName;
+
+const addEngineer = () => {
+    inquirer.prompt([
+        {
+            message: "What is your Engineer's name?",
+            type: "input",
+            name: "name"
+        },
+        {
+            message: "What is your Engineer's GitHub user name?",
+            type: "input",
+            name: "githubUserName"
+        },
+        {
+            message: "What is your Engineer's ID?",
+            type: "input",
+            name: "id"
+        },
+        {
+            message: "What is your Engineer's email?",
+            type: "input",
+            name: "email"
+        }
+    ]).then(userChoice => {
+        const engineer = new Engineer (userChoice.name, userChoice.githubUserName, userChoice.id, userChoice.email)
+        teamMembers.push(engineer)
+        IDArray.push(userChoice.id);
+        createTeam(); 
     });
 }
 
-const Intern = () => {
-    inquirer.prompt({
-        message: "What is the name of your school?",
-        type: "input", 
-        name: "school"
-    }).then(({school}) => {
-        const schoolName = this.school;
+const addIntern = () => {
+    inquirer.prompt([
+        {
+            message: "What is your Intern's name?",
+            type: "input",
+            name: "name"
+        },
+        {
+            message: "What is your Intern's school?",
+            type: "input",
+            name: "githubUserName"
+        },
+        {
+            message: "What is your Intern's ID?",
+            type: "input",
+            name: "id"
+        },
+        {
+            message: "What is your Intern's email?",
+            type: "input",
+            name: "email"
+        }
+    ]).then(userChoice => {
+        const intern = new Intern (userChoice.name, userChoice.school, userChoice.id, userChoice.email)
+        teamMembers.push(intern)
+        IDArray.push(userChoice.id);
+        createTeam(); 
     });
 }
 
-const getEmployeeInfo = () => {
+const createManager = () => {
 inquirer.prompt([
     {
-        message: "What is your name?",
+        message: "What is your manager's name?",
         type: "input",
         name: "name"
     },
@@ -54,29 +113,29 @@ inquirer.prompt([
         name: "email"
     },
     {
-        message: "What is your title?",
-        type: "list",
-        name: "title",
-        choices: ["Manager", "Engineer", "Intern"]
+        message: "What is your office number?",
+        type: "input",
+        name: "officeNumber"
     },
-
-]).then(({title}) => {
-    switch(title) {
-        case "Manager":
-            Manager();
-            break;
-        case "Engineer":
-            Engineer();
-            break;
-        case "Intern":
-            Intern();
-            break;
-    }
-
-   
-
+]).then(userChoice => {
+    const manager = new Manager (userChoice.name, userChoice.email, userChoice.id, userChoice.officeNumber)
+    teamMembers.push(manager)
+    IDArray.push(userChoice.id);
+    createTeam(); 
 });
 
-}
-getEmployeeInfo();
+    
+    
+    
+};
 
+
+buildTeam = () => {
+    fs.writeFileSync(outputPath, htmlRender(teamMembers), "utf-8")
+}
+
+createManager();
+
+}
+
+buildTeamMenu();
