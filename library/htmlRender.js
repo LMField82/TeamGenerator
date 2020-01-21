@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
+
 const templatesDir = path.resolve(__dirname, "../html");
 const render = employees => {
     const html = [];
@@ -13,6 +14,7 @@ const render = employees => {
     html.push(employees.filter(employee => employee.getRole()=== "Intern")
     .map(intern => renderIntern(intern))
     );
+    return rednerMain(html.join(""));
 }
 
 const renderManager = manager => {
@@ -21,7 +23,7 @@ const renderManager = manager => {
     template = replacePlaceholders(template, "title", manager.getRole());
     template = replacePlaceholders(template, "email", manager.getEmail());
     template = replacePlaceholders(template, "id", manager.getId());
-    template = replacePlaceholders(template, "officeNum", manager.getOfficeNum());
+    template = replacePlaceholders(template, "office", manager.getOffice());
     return template;
 }
 
@@ -31,7 +33,7 @@ const renderEngineer = engineer => {
     template = replacePlaceholders(template, "title", engineer.getRole());
     template = replacePlaceholders(template, "email", engineer.getEmail());
     template = replacePlaceholders(template, "id", engineer.getId());
-    template = replacePlaceholders(template, "gitHub", engineer.getGitHub());
+    template = replacePlaceholders(template, "gitHub", engineer.getGithub());
     return template;
 }
 
@@ -41,11 +43,18 @@ const renderIntern = intern => {
     template = replacePlaceholders(template, "title", intern.getRole());
     template = replacePlaceholders(template, "email", intern.getEmail());
     template = replacePlaceholders(template, "id", intern.getId());
-    template = replacePlaceholders(template, "officeNum", intern.getSchool());
+    template = replacePlaceholders(template, "school", intern.getSchool());
     return template;
+}
+
+const rednerMain = html => {
+    const template = fs.readFileSync(path.resolve(templatesDir, "main.html"), "utf8");
+    return replacePlaceholders(template, "team", html);
 }
 
 const replacePlaceholders = (template, placeholder, value) => {
     const pattern = new RegExp("{{ " + placeholder + " }}", "gm");
     return template.replace(pattern, value);
   };
+
+  module.exports = render;

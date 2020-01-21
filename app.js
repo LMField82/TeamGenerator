@@ -59,8 +59,11 @@ const addEngineer = () => {
         }
     ]).then(userChoice => {
         const engineer = new Engineer (userChoice.name, userChoice.githubUserName, userChoice.id, userChoice.email)
-        teamMembers.push(engineer)
+        teamMembers.push(engineer);
         IDArray.push(userChoice.id);
+            if (userChoice.id == IDArray) {
+                throw(err);
+            }
         createTeam(); 
     });
 }
@@ -103,22 +106,22 @@ inquirer.prompt([
         name: "name"
     },
     {
-        message: "What is your ID?",
+        message: "What is your manager's ID?",
         type: "input",
         name: "id"
     },
     {
-        message: "What is your email?",
+        message: "What is your manager's email?",
         type: "input",
         name: "email"
     },
     {
-        message: "What is your office number?",
+        message: "What is your manager's office number?",
         type: "input",
-        name: "officeNumber"
+        name: "office"
     },
 ]).then(userChoice => {
-    const manager = new Manager (userChoice.name, userChoice.email, userChoice.id, userChoice.officeNumber)
+    const manager = new Manager (userChoice.name, userChoice.id, userChoice.email, userChoice.office)
     teamMembers.push(manager)
     IDArray.push(userChoice.id);
     createTeam(); 
@@ -131,7 +134,7 @@ inquirer.prompt([
 
 
 buildTeam = () => {
-    fs.writeFileSync(outputPath, htmlRender(teamMembers), "utf-8")
+    fs.writeFileSync(outputPath, htmlRender(teamMembers), "utf8")
 }
 
 createManager();
@@ -139,3 +142,5 @@ createManager();
 }
 
 buildTeamMenu();
+
+
