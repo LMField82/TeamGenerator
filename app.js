@@ -45,7 +45,7 @@ const addEngineer = () => {
         {
             message: "What is your Engineer's GitHub user name?",
             type: "input",
-            name: "githubUserName"
+            name: "github"
         },
         {
             message: "What is your Engineer's ID?",
@@ -58,7 +58,7 @@ const addEngineer = () => {
             name: "email"
         }
     ]).then(userChoice => {
-        const engineer = new Engineer (userChoice.name, userChoice.githubUserName, userChoice.id, userChoice.email)
+        const engineer = new Engineer (userChoice.name, userChoice.id, userChoice.email, userChoice.github)
         teamMembers.push(engineer);
         IDArray.push(userChoice.id);
             if (userChoice.id == IDArray) {
@@ -78,7 +78,7 @@ const addIntern = () => {
         {
             message: "What is your Intern's school?",
             type: "input",
-            name: "githubUserName"
+            name: "school"
         },
         {
             message: "What is your Intern's ID?",
@@ -91,7 +91,7 @@ const addIntern = () => {
             name: "email"
         }
     ]).then(userChoice => {
-        const intern = new Intern (userChoice.name, userChoice.school, userChoice.id, userChoice.email)
+        const intern = new Intern (userChoice.name, userChoice.id, userChoice.email, userChoice.school)
         teamMembers.push(intern)
         IDArray.push(userChoice.id);
         createTeam(); 
