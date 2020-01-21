@@ -1,2 +1,2 @@
 # TeamGenerator
-A node based application that generates a team profile and a pdf
+A node based application that generates a team profile on an html page.
