@@ -6,22 +6,19 @@ const inquirer = require("inquirer");
 
 class Employee {
     constructor(name, id, email, title) {
-        // if(!name) {
-        //     throw new Error("You are missing the name.");
-        // }
-        // if(!id || id === isNaN) {
-        //     throw new Error("You must enter a whole number id.");
-        // }
-        // if(!title) {
-        //     throw new Error("You are missing the title.");
-        // }
-        // if(!email) {
-        //     throw new Error("You must enter a valid email.")
-        // }
         this.name = name;
         this.id = id;
         this.title = title;
         this.email = email;
+        if(!name) {
+            throw new Error("You are missing the name.");
+        }
+        if(!id || id === isNaN) {
+            throw new Error("You must enter a whole number id.");
+        }
+        if(!email) {
+            throw new Error("You must enter a valid email.");
+        }
     }
 
     getName() {
