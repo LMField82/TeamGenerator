@@ -4,6 +4,7 @@ const htmlRender = require("./library/htmlRender");
 const Manager = require("./library/manager");
 const Engineer = require("./library/engineer");
 const Intern = require("./library/intern");
+const Designer = require("./library/designer");
 const path = require("path");
 
 const outputPath = path.resolve(__dirname, "output", "team.html");
@@ -17,13 +18,16 @@ createTeam = () => {
     inquirer.prompt({
         message: "What type of team member would you like to add?",
         type: "list",
-        choices: ["Engineer", "Intern", "No More Team Members"],
+        choices: ["Engineer", "Designer", "Intern", "No More Team Members"],
         name: "addTeamMembers"
 
     }).then(userChoice => {
         switch (userChoice.addTeamMembers) {
             case "Engineer":
                 addEngineer();
+                break;
+            case "Designer":
+                addDesigner();
                 break;
             case "Intern":
                 addIntern();
@@ -65,6 +69,39 @@ const addEngineer = () => {
                 throw(err);
             }
         createTeam(); 
+    });
+}
+
+const addDesigner = () => {
+    inquirer.prompt([
+        {
+            message: "What is your Designer's name?",
+            type: "input",
+            name: "name"
+        },
+        {
+            message: "What is your Designer's Github user name?",
+            type: "input",
+            name: "github"
+        },
+        {
+            message: "What is your Designer's ID?",
+            type: "input",
+            name: "id"
+        },
+        {
+            message: "What is your Designer's email?",
+            type: "input",
+            name: "email"
+        }
+    ]).then(userChoice => {
+        const designer = new Designer (userChoice.name, userChoice.id, userChoice.email, userChoice.github)
+        teamMembers.push(designer);
+        IDArray.push(userChoice.id);
+            if (userChoice.id === IDArray) {
+                throw (err);
+            }
+        createTeam();
     });
 }
 
